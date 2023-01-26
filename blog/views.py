@@ -8,3 +8,6 @@ def Home(request):
 #about view
 def About(request):
     return render(request,'blog/about.html')
+#contact page
+def Contact(request):
+    return render(request,'blog/contact.html')
