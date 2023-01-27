@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from .forms import SignupForm,LoginForm
+from django.contrib import messages
 
 # Create your views here.
 #home page view
@@ -19,10 +21,18 @@ def Dashboard(request):
 
 #for signup
 def Signup(request):
-    return render(request,'blog/signup.html')
+    if request.method=="POST":
+        fm=SignupForm(request.POST)
+        if fm.is_valid():
+            messages.success(request,'congratulations you now become auther')
+            fm.save()
+    else:
+       fm=SignupForm()
+    return render(request,'blog/signup.html',{'form':fm})
 #for login
 def Login(request):
-    return render(request,'blog/login.html')
+    fm=LoginForm()
+    return render(request,'blog/login.html',{'form':fm})
 #for logout
 def Logout(request):
     return HttpResponseRedirect('/')
