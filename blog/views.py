@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 #home page view
@@ -12,12 +13,16 @@ def About(request):
 def Contact(request):
     return render(request,'blog/contact.html')
 
+#for dashboard
+def Dashboard(request):
+    return render(request,'blog/dashboard.html')
+
 #for signup
 def Signup(request):
-    pass
+    return render(request,'blog/signup.html')
 #for login
 def Login(request):
-    pass
+    return render(request,'blog/login.html')
 #for logout
 def Logout(request):
-    pass
+    return HttpResponseRedirect('/')
