@@ -11,3 +11,13 @@ def About(request):
 #contact page
 def Contact(request):
     return render(request,'blog/contact.html')
+
+#for signup
+def Signup(request):
+    pass
+#for login
+def Login(request):
+    pass
+#for logout
+def Logout(request):
+    pass
