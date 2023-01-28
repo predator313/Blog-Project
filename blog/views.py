@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .forms import SignupForm,LoginForm
 from django.contrib import messages
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate,login,logout
 
 # Create your views here.
 #home page view
@@ -32,6 +32,7 @@ def Signup(request):
     return render(request,'blog/signup.html',{'form':fm})
 #for login
 def Login(request):
+    # if not request.user.is_authenticated:
     if not request.user.is_authenticated:
         if request.method=="POST":
             fm=LoginForm(request=request,data=request.POST)
@@ -40,10 +41,12 @@ def Login(request):
                 upass=fm.cleaned_data['password']
                 user=authenticate(username=uname,password=upass)
                 if user:
-                    Login(user,request)
+                    login(user,request)
+                    messages.success(request,'successfully logged in !!!')
+                    return HttpResponseRedirect('/dash/')
         else:
             fm=LoginForm()
-            return render(request,'blog/login.html',{'form':fm})
+        return render(request,'blog/login.html',{'form':fm})
     else:
         return HttpResponseRedirect('/dash/')
 #for logout
