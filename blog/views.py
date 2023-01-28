@@ -2,12 +2,14 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .forms import SignupForm,LoginForm
 from django.contrib import messages
-from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth import authenticate,login,logout,update_session_auth_hash
+from .models import Post
 
 # Create your views here.
 #home page view
 def Home(request):
-    return render(request,'blog/home.html')
+    posts=Post.objects.all()
+    return render(request,'blog/home.html',{'posts':posts})
 
 #about view
 def About(request):
@@ -51,4 +53,5 @@ def Login(request):
         return HttpResponseRedirect('/dash/')
 #for logout
 def Logout(request):
+    logout(request)
     return HttpResponseRedirect('/')
