@@ -20,7 +20,10 @@ def Contact(request):
 
 #for dashboard
 def Dashboard(request):
-    return render(request,'blog/dashboard.html')
+    if request.user.is_authenticated:
+     return render(request,'blog/dashboard.html')
+    else:
+        return HttpResponseRedirect('/login/')
 
 #for signup
 def Signup(request):
@@ -43,8 +46,8 @@ def Login(request):
                 upass=fm.cleaned_data['password']
                 user=authenticate(username=uname,password=upass)
                 if user:
-                    login(user,request)
-                    messages.success(request,'successfully logged in !!!')
+                    login(request,user)
+                    # messages.success(request,'successfully logged in !!!')
                     return HttpResponseRedirect('/dash/')
         else:
             fm=LoginForm()
@@ -54,4 +57,5 @@ def Login(request):
 #for logout
 def Logout(request):
     logout(request)
-    return HttpResponseRedirect('/')
+    messages.success(request,'successfully logout')
+    return HttpResponseRedirect('/login/')
