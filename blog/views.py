@@ -60,3 +60,24 @@ def Logout(request):
     logout(request)
     messages.success(request,'successfully logout')
     return HttpResponseRedirect('/login/')
+
+#for adding new post
+def add_post(request):
+    if request.user.is_authenticated:
+        return render(request,'blog/addpost.html')
+    else:
+        return HttpResponseRedirect('/login/')
+
+#for updating post
+def Update_post(request,id):
+    if request.user.is_authenticated:
+        return render(request,'blog/updatepost.html')
+    else:
+        return HttpResponseRedirect('/login/')
+
+#for deleting post
+def delete_post(request,id):
+    # if request.user.is_authenticated:
+    #     return render(request,'blog')
+    pass
+

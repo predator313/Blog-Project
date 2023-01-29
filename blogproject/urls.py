@@ -26,4 +26,7 @@ urlpatterns = [
     path('signup/',views.Signup,name='signup'),
     path('logout/',views.Logout,name='logout'),
     path('dash/',views.Dashboard,name='dash'),
+    path('addpost/',views.add_post,name='addpost'),
+    path('updatepost/<int:id>/',views.Update_post,name='updatepost'),
+    path('deletepost/<int:id>/',views.delete_post,name='deletepost'),#update and delete post is the dynamic urls
 ]
