@@ -26,10 +26,13 @@
                   <td>{{post.desc}}</td>
                   <td class="text-center">
                     <a href="{% url 'updatepost' post.id %}" class="btn btn-warning btn-sm">Edit</a>
+                    {% comment %} delete action is only for admin not for author {% endcomment %}
+                    {% if perms.blog.delete_post %}
                     <form action="{% url 'deletepost' post.id %}" method="post" class="d-inline">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                     </form>
+                    {% endif %}
                   </td>
                 </tr>
                 {% endfor %}  

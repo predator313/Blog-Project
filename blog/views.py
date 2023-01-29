@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout,update_session_auth_hash
 from .models import Post
 from .forms import PostForm
+from django.contrib.auth.models import Group #the delete permission is only for admin
+#author groups member has no delete righ
 
 # Create your views here.
 #home page view
@@ -33,7 +35,9 @@ def Signup(request):
         fm=SignupForm(request.POST)
         if fm.is_valid():
             messages.success(request,'congratulations you now become auther')
-            fm.save()
+            user=fm.save()
+            group=Group.objects.get(name='Author')
+            user.groups.add(group)
     else:
        fm=SignupForm()
     return render(request,'blog/signup.html',{'form':fm})
