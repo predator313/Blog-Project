@@ -4,6 +4,7 @@ from .forms import SignupForm,LoginForm
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout,update_session_auth_hash
 from .models import Post
+from .forms import PostForm
 
 # Create your views here.
 #home page view
@@ -64,14 +65,30 @@ def Logout(request):
 #for adding new post
 def add_post(request):
     if request.user.is_authenticated:
-        return render(request,'blog/addpost.html')
+        if request.method=='POST':
+            fm=PostForm(request.POST)
+            if(fm.is_valid()):
+                fm.save()
+                fm=PostForm()
+        else:
+            fm=PostForm()
+
+        return render(request,'blog/addpost.html',{'form':fm})
     else:
         return HttpResponseRedirect('/login/')
 
 #for updating post
 def Update_post(request,id):
     if request.user.is_authenticated:
-        return render(request,'blog/updatepost.html')
+        if request.method=='POST':
+            pi=Post.objects.get(pk=id)
+            fm=PostForm(request.POST,instance=pi)
+            if fm.is_valid():
+                fm.save()
+        else:
+            pi=Post.objects.get(pk=id)
+            fm=PostForm(instance=pi)
+        return render(request,'blog/updatepost.html',{'form':fm})
     else:
         return HttpResponseRedirect('/login/')
 
