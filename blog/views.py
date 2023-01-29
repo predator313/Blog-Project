@@ -94,7 +94,11 @@ def Update_post(request,id):
 
 #for deleting post
 def delete_post(request,id):
-    # if request.user.is_authenticated:
-    #     return render(request,'blog')
-    pass
+    if request.user.is_authenticated:
+        if request.method=='POST':
+            pi=Post.objects.get(pk=id)
+            pi.delete()
+            return HttpResponseRedirect('/dash/')
+    else:
+        return HttpResponseRedirect('/login/')
 
